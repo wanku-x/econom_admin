@@ -1,0 +1,32 @@
+@import '~antd/dist/antd.css';
+
+.sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  z-index: 2;
+}
+
+.header {
+  padding: 0 15px;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+}
+
+.content {
+  min-height: 100vh;
+}
+
+@media (min-width: 769px) {
+  .header {
+    display: none;
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+}

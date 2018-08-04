@@ -1,35 +1,30 @@
 import React, { Component } from 'react';
-import { Menu, Icon } from 'antd';
+import { withRouter, Link } from 'react-router-dom';
+import { Menu } from 'antd';
+import pages from '../PagesList';
 
 class CustomMenu extends Component {
-  handleClick = (e) => {
-    console.log('click ', e);
-  }
-
   render() {
     return (
       <Menu
-        onClick={this.handleClick}
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[this.props.location.pathname]}
         mode="inline"
         theme="dark"
         style={{ minHeight: '100vh' }}
       >
-        <Menu.Item key="1">
-          <span><Icon type="mail" /><span>Navigation 1</span></span>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <span><Icon type="mail" /><span>Navigation 2</span></span>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <span><Icon type="mail" /><span>Navigation 3</span></span>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <span><Icon type="mail" /><span>Navigation 4</span></span>
-        </Menu.Item>
+        {pages.filter((menuItem) => {
+          if (this.props.routes.indexOf(menuItem.path) >= 0) {
+            return true;
+          }
+          return false;
+        }).map((route) => (
+          <Menu.Item key={route.path}>
+            <Link to={route.path}>{route.icon}<span>{route.name}</span></Link>
+          </Menu.Item>
+        ))}
       </Menu>
     );
   }
 }
 
-export default CustomMenu;
+export default withRouter(CustomMenu);

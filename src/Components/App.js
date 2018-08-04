@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout, Icon } from 'antd';
 import { CustomMenu } from './CustomMenu';
 import { NotFound } from './Pages';
@@ -60,6 +60,7 @@ class App extends Component {
             />
           </Header>
           <Content className="content">
+            <Switch>
             {pages.filter((page) => {
               if (this.state.routes.indexOf(page.path) >= 0) {
                 return true;
@@ -73,7 +74,8 @@ class App extends Component {
                 component={page.component}
               />
             ))}
-            <Route component={() => <NotFound />}/>
+            <Route path="*" component={() => <NotFound />}/>
+            </Switch>
           </Content>
         </Layout>
       </Router>

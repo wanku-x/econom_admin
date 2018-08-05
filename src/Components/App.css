@@ -40,4 +40,9 @@
     margin-top: 0;
     margin-left: 200px;
   }
+
+  .steps-content {
+    min-height: 300px;
+  }
+  
 }

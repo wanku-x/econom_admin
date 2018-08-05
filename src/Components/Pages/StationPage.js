@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { Card, Steps, Button, Row, Col } from 'antd';
-import stationSteps from './StationSteps';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoneyBillAlt, faCreditCard } from '@fortawesome/free-regular-svg-icons';
+import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { Step1, Step2, Step3, Step4 } from './StationSteps';
 
 const Step = Steps.Step;
 
 class StationPage extends Component {
   state = {
     current: 0,
+    formData: {
+      bet: 0,
+    }
   }
 
   next() {
@@ -19,8 +25,30 @@ class StationPage extends Component {
     this.setState({ current });
   }
 
+  updateFormData(data) {
+    this.setState({formData: data});
+  }
+
   render() {
-    const { current } = this.state;
+    const { current, formData } = this.state;
+
+    const stationSteps = [
+      {
+        title: 'Ставка',
+        content: <Step1 updateFormData={this.updateFormData} />,
+        icon: <FontAwesomeIcon icon={faCoins} size={'1x'} />
+      },
+      {
+        title: 'Оплата',
+        content: <Step2 />,
+        icon: <FontAwesomeIcon icon={faCreditCard} size={'1x'} />
+      },
+      {
+        title: 'Выигрыш',
+        content: <Step3 />,
+        icon: <FontAwesomeIcon icon={faTrophy} size={'1x'} />
+      }
+    ];
 
     return (
       <Row

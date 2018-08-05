@@ -9,16 +9,26 @@
 }
 
 .header {
-  padding: 0 15px;
+  padding: 0 16px;
   position: fixed;
   z-index: 1;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #fff;
   text-align: right;
 }
 
 .content {
+  margin-top: 64px;
   min-height: 100vh;
+  padding: 16px 8px;
+}
+
+.card {
+  margin-bottom: 16px;
+}
+
+.steps-content {
+  margin-top: 16px;
 }
 
 @media (min-width: 769px) {
@@ -27,6 +37,7 @@
   }
 
   .content {
+    margin-top: 0;
     margin-left: 200px;
   }
 }

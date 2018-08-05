@@ -13,8 +13,7 @@ class App extends Component {
     collapsed: false,
     routes: [
       '/station',
-      '/not_station',
-      '/not_station_2'
+      '/not_station'
     ]
   };
 

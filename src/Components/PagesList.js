@@ -1,27 +1,28 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { StationPage, NotStationPage } from './Pages';
 
 const pages = [
   {
     path: '/station',
     exact: true,
-    icon: <Icon type="mail" />,
-    name: 'Станции',
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    name: 'Станция',
     component: () => <StationPage />
   },
   {
     path: '/not_station',
     exact: true,
-    icon: <Icon type="mail" />,
-    name: 'Не станции',
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    name: 'Добавить команду',
     component: () => <NotStationPage />
   },
   {
     path: '/not_station_2',
     exact: true,
-    icon: <Icon type="mail" />,
-    name: 'Не станции 2',
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    name: 'Депозит',
     component: () => <StationPage />
   },
 ];

@@ -5,21 +5,24 @@ import pages from '../PagesList';
 
 class CustomMenu extends Component {
   render() {
+    const { routes } = this.props;
+    const { pathname } = this.props.location;
+
     return (
       <Menu
-        defaultSelectedKeys={[this.props.location.pathname]}
+        defaultSelectedKeys={[pathname]}
         mode="inline"
         theme="dark"
         style={{ minHeight: '100vh' }}
       >
-        {pages.filter((menuItem) => {
-          if (this.props.routes.indexOf(menuItem.path) >= 0) {
+        {pages.filter((page) => {
+          if (routes.indexOf(page.path) >= 0) {
             return true;
           }
           return false;
-        }).map((route) => (
-          <Menu.Item key={route.path}>
-            <Link to={route.path}>{route.icon}<span>{route.name}</span></Link>
+        }).map((link) => (
+          <Menu.Item key={link.path}>
+            <Link to={link.path}>{link.icon}<span style={{paddingLeft: 8}}>{link.name}</span></Link>
           </Menu.Item>
         ))}
       </Menu>

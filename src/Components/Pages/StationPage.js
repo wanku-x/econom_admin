@@ -3,7 +3,7 @@ import { Card, Steps, Button, Row, Col } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt, faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { Step1, Step2, Step3, Step4, StepForm } from './StationSteps';
+import { Step1, Step2, Step3 } from './StationSteps';
 
 const Step = Steps.Step;
 
@@ -35,7 +35,7 @@ class StationPage extends Component {
     const stationSteps = [
       {
         title: 'Ставка',
-        content: <StepForm />,
+        content: <Step1 minBet={1000} maxBet={100000} multiplier={2} />,
         icon: <FontAwesomeIcon icon={faCoins} size={'1x'} />
       },
       {

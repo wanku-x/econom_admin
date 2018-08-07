@@ -38,6 +38,11 @@
   clear: both;
 }
 
+.win-bet {
+  color: green;
+  font-size: 16px;
+}
+
 @media (min-width: 769px) {
   .header {
     display: none;
@@ -52,4 +57,7 @@
     min-height: 300px;
   }
   
+  .win-bet {
+    text-align: right;
+  }
 }

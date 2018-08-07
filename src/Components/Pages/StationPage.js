@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Card, Steps, Button, Row, Col } from 'antd';
+import { Card, Steps, Row, Col } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoneyBillAlt, faCreditCard } from '@fortawesome/free-regular-svg-icons';
+import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Step1, Step2, Step3 } from './StationSteps';
 
 const Step = Steps.Step;
 const initialValues = {
+  stationId: 1,
   minBet: 1000,
   maxBet: 100000,
   multiplier: 2,
@@ -21,12 +22,12 @@ class StationPage extends Component {
     }
   }
 
-  next() {
+  next = () => {
     const current = this.state.current + 1;
     this.setState({ current });
   }
 
-  prev() {
+  prev = () => {
     const current = this.state.current - 1;
     this.setState({ current });
   }
@@ -37,7 +38,7 @@ class StationPage extends Component {
         ...prevState.formData,
         [e.name]: e.value,
       }
-    }), () => {console.log(this.state.formData)});
+    }));
   }
 
   render() {
@@ -52,7 +53,9 @@ class StationPage extends Component {
             minBet={initialValues.minBet}
             maxBet={initialValues.maxBet}
             multiplier={initialValues.multiplier}
-            updateFormData={this.updateFormData} />
+            updateFormData={this.updateFormData}
+            next={this.next}
+          />
         ),
         icon: <FontAwesomeIcon icon={faCoins} size={'1x'} />
       },
@@ -82,39 +85,7 @@ class StationPage extends Component {
                 <Step key={index} title={item.title} icon={item.icon} />
               ))}
             </Steps>
-            <div className="steps-content">
-              {stationSteps[current].content}
-            </div>
-            <div className="steps-action">
-              {
-                (current > 0) &&
-                (<Button
-                  style={{ float: 'left' }}
-                  onClick={() => this.prev()}
-                >
-                  Назад
-                </Button>)
-              }
-              {
-                (current < stationSteps.length - 1) &&
-                (<Button
-                  style={{ float: 'right' }}
-                  type="primary"
-                  onClick={() => this.next()}
-                >
-                  Дальше
-                </Button>)
-              }
-              {
-                (current === stationSteps.length - 1) &&
-                (<Button
-                  style={{ float: 'right' }}
-                  type="primary"
-                >
-                  Отправить
-                </Button>)
-              }
-            </div>
+            {stationSteps[current].content}
           </Card>
         </Col>
       </Row>

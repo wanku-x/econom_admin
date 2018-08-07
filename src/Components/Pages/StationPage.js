@@ -6,12 +6,18 @@ import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Step1, Step2, Step3 } from './StationSteps';
 
 const Step = Steps.Step;
+const initialValues = {
+  minBet: 1000,
+  maxBet: 100000,
+  multiplier: 2,
+}
 
 class StationPage extends Component {
   state = {
     current: 0,
     formData: {
-      bet: 0,
+      bet: initialValues.minBet,
+      notBet: 1000,
     }
   }
 
@@ -25,8 +31,13 @@ class StationPage extends Component {
     this.setState({ current });
   }
 
-  updateFormData(data) {
-    this.setState({formData: data});
+  updateFormData = (e) => {
+    this.setState((prevState) => ({
+      formData: {
+        ...prevState.formData,
+        [e.name]: e.value,
+      }
+    }), () => {console.log(this.state.formData)});
   }
 
   render() {
@@ -35,7 +46,14 @@ class StationPage extends Component {
     const stationSteps = [
       {
         title: 'Ставка',
-        content: <Step1 minBet={1000} maxBet={100000} multiplier={2} />,
+        content: (
+          <Step1
+            bet={formData.bet}
+            minBet={initialValues.minBet}
+            maxBet={initialValues.maxBet}
+            multiplier={initialValues.multiplier}
+            updateFormData={this.updateFormData} />
+        ),
         icon: <FontAwesomeIcon icon={faCoins} size={'1x'} />
       },
       {

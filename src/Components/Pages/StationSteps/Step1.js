@@ -3,7 +3,7 @@ import { Form, Input } from 'antd';
 
 class Step1 extends Component {
   state = {
-    bet: this.props.minBet,
+    bet: this.props.bet,
   }
 
   betChange = (value, prevValue) => {
@@ -15,6 +15,10 @@ class Step1 extends Component {
     ) {
       return prevValue;
     }
+    this.props.updateFormData({
+      name: 'bet',
+      value: number
+    });
     this.setState({bet: number});
     return number;
   }

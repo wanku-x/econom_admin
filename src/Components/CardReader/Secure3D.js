@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Form, Modal, Row, message } from 'antd';
+import { Loader } from '../Loader';
 import MaskedInput from 'react-maskedinput';
 
 class Secure3D extends Component {
@@ -18,8 +19,8 @@ class Secure3D extends Component {
       message.error('Вы не ввели номер карты!');
       return;
     }
-    this.setState({loading: true});
     //('Данной карты нет в базе данных');
+    this.setState({loading: true});
     this.props.onOk(card.substr(-10)).finally(() => {
       this.setState({loading: false});
     });
@@ -28,30 +29,33 @@ class Secure3D extends Component {
   render() {
     const FormItem = Form.Item;
     return (
-      <Modal
-        title="Номер карты"
-        centered
-        closable={false}
-        confirmLoading={this.state.loading}
-        visible={this.props.visible}
-        okText="Оплатить"
-        cancelText="Отмена"
-        onOk={() => this.onOk(this.state.creditCard)}
-        onCancel={() => this.props.onCancel()}
-      >
-        <Row type="flex" style={{flexDirection: 'column'}} justify="center" className="credit-card">
-          <FormItem>
-            <MaskedInput
-              autoFocus
-              autoComplete="off"
-              className="credit-card-input ant-input ant-input-lg"
-              mask="1111 1111 1111 1111"
-              name="card"
-              onChange={this.onChange}
-            />
-          </FormItem>
-        </Row>
-      </Modal>
+      <Fragment>
+        <Modal
+          title="Номер карты"
+          centered
+          closable={false}
+          confirmLoading={this.state.loading}
+          visible={this.props.visible}
+          okText="Оплатить"
+          cancelText="Отмена"
+          onOk={() => this.onOk(this.state.creditCard)}
+          onCancel={() => this.props.onCancel()}
+        >
+          <Row type="flex" style={{flexDirection: 'column'}} justify="center" className="credit-card">
+            <FormItem>
+              <MaskedInput
+                autoFocus
+                autoComplete="off"
+                className="credit-card-input ant-input ant-input-lg"
+                mask="1111 1111 1111 1111"
+                name="card"
+                onChange={this.onChange}
+              />
+            </FormItem>
+          </Row>
+        </Modal>
+        <Loader isOpen={this.state.loading} />
+      </Fragment>
     )
   }
 }

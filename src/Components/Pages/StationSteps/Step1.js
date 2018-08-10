@@ -4,7 +4,7 @@ import { Form, Input, Button, Row, Col } from 'antd';
 class Step1 extends Component {
   state = {
     bet: this.props.bet,
-    success: false,
+    success: (this.props.bet >= this.props.minBet)&&(this.props.bet <= this.props.maxBet),
   }
 
   changeBet = (value, prevValue) => {

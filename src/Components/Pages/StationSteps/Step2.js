@@ -33,6 +33,7 @@ class Step2 extends Component {
             value: ''
           });
           reject;
+          return;
         }
         console.log('Закрываем модалку и ставим успешность 2 этапа');
         this.setState({

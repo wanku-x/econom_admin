@@ -19,7 +19,7 @@ class Secure3D extends Component {
       return;
     }
     this.setState({loading: true});
-    // if (!fetch) { message.error('Данной карты нет в базе данных'); return;}
+    //('Данной карты нет в базе данных');
     await this.props.onOk(card.substr(-10));
     this.setState({loading: false});
   }

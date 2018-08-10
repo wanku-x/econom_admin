@@ -1,4 +1,13 @@
 @import '~antd/dist/antd.css';
+@font-face {
+  font-family: 'OCRAStd';
+  src: url('../fonts/OCRAStd.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/OCRAStd.woff') format('woff'),
+    url('../fonts/OCRAStd.ttf')  format('truetype'),
+    url('../fonts/OCRAStd.svg#OCRAStd') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .sider {
   overflow: auto;
@@ -41,6 +50,24 @@
 .win-bet {
   color: green;
   font-size: 16px;
+}
+
+.credit-card {
+  background-color: #1890ff;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  height: 295px;
+  padding: 40px;
+}
+
+.credit-card-input {
+  background-color: #40a9ff;
+  color: #fff;
+  font-family: 'OCRAStd';
+  font-size: 26px;
+  text-align: center;
+  width: 100%;
 }
 
 @media (min-width: 769px) {

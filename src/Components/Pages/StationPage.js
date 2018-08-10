@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Card, Steps, Row, Col } from 'antd';
+import { Card, Steps, Modal, Row, Col } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Step1, Step2, Step3 } from './StationSteps';
 
 const Step = Steps.Step;
+const confirm = Modal.confirm;
 const initialValues = {
   stationId: 1,
   minBet: 1000,
@@ -17,8 +18,9 @@ class StationPage extends Component {
   state = {
     current: 0,
     formData: {
-      bet: initialValues.minBet,
-      notBet: 1000,
+      stationId: initialValues.stationId,
+      bet: 0,
+      creditCard: '',
     }
   }
 
@@ -41,6 +43,29 @@ class StationPage extends Component {
     }));
   }
 
+  debitMoney = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(()=> {
+        console.log('Оплата прошла успешно');
+        resolve(true);
+      }, 5000);
+    }).catch(() => console.log('StationPage.js > debitMoney() - Error'));
+    /*
+    confirm({
+      title: 'Вы действительно хотите снять средства у команды N?',
+      content: 'Если данная карта не пренадлежит текущей команде, обратитесь к организаторам.',
+      okText: 'Да',
+      cancelText: 'Отмена',
+      onOk() {
+        // от сюда надо передать как-то состояние true или false
+      },
+      onCancel() {
+        // от сюда надо передать как-то состояние false
+      },
+    });
+    // и return этого состояния тут*/
+  }
+
   render() {
     const { current, formData } = this.state;
 
@@ -61,7 +86,13 @@ class StationPage extends Component {
       },
       {
         title: 'Оплата',
-        content: <Step2 />,
+        content: (
+          <Step2
+            updateFormData={this.updateFormData}
+            debitMoney={this.debitMoney}
+            prev={this.prev}
+          />
+        ),
         icon: <FontAwesomeIcon icon={faCreditCard} size={'1x'} />
       },
       {

@@ -4,7 +4,7 @@ import { Form, Input, Button, Row, Col } from 'antd';
 class Step1 extends Component {
   state = {
     bet: this.props.bet,
-    success: true,
+    success: false,
   }
 
   changeBet = (value, prevValue) => {
@@ -48,27 +48,17 @@ class Step1 extends Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 6 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 12 },
       },
     };
-    const formLabelLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      betCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      }
-    }
 
     return (
       <Fragment>
-        <Row type="flex" align="middle" justify="center" className="steps-content">
+        <Row type="flex" style={{flexDirection: 'column'}} justify="center" className="steps-content">
           <Col xs={{span: 24}}>
             <FormItem
               {...formItemLayout}
@@ -85,12 +75,14 @@ class Step1 extends Component {
                 />
               )}
             </FormItem>
-            <Col {...formLabelLayout.labelCol} className="ant-form-item-label">
+          </Col>
+          <Col xs={{span: 24}}>
+            <Col {...formItemLayout.labelCol} className="ant-form-item-label">
               <label>
                 Выигрыш
               </label>
             </Col>
-            <Col {...formLabelLayout.betCol} className="ant-form-item-control win-bet">
+            <Col {...formItemLayout.wrapperCol} className="ant-form-item-control win-bet">
               <span>
                 {this.state.bet * this.props.multiplier}$
               </span>

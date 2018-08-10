@@ -12,7 +12,7 @@ class Secure3D extends Component {
     this.setState({ creditCard: e.target.value });
   }
 
-  onOk = async (creditCard) => {
+  onOk = (creditCard) => {
     const card = creditCard.replace(/\s/g, '').replace(/_/g, '');
     if (card.length != 16) {
       message.error('Вы не ввели номер карты!');
@@ -20,8 +20,9 @@ class Secure3D extends Component {
     }
     this.setState({loading: true});
     //('Данной карты нет в базе данных');
-    await this.props.onOk(card.substr(-10));
-    this.setState({loading: false});
+    this.props.onOk(card.substr(-10)).finally(() => {
+      this.setState({loading: false});
+    });
   }
 
   render() {

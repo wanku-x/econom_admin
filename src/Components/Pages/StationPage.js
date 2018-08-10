@@ -45,25 +45,19 @@ class StationPage extends Component {
 
   debitMoney = () => {
     return new Promise((resolve, reject) => {
-      setTimeout(()=> {
-        console.log('Оплата прошла успешно');
-        resolve(true);
-      }, 5000);
-    }).catch(() => console.log('StationPage.js > debitMoney() - Error'));
-    /*
-    confirm({
-      title: 'Вы действительно хотите снять средства у команды N?',
-      content: 'Если данная карта не пренадлежит текущей команде, обратитесь к организаторам.',
-      okText: 'Да',
-      cancelText: 'Отмена',
-      onOk() {
-        // от сюда надо передать как-то состояние true или false
-      },
-      onCancel() {
-        // от сюда надо передать как-то состояние false
-      },
+      confirm({
+        title: 'Вы действительно хотите снять средства у команды N?',
+        content: 'Если данная карта не пренадлежит текущей команде, обратитесь к организаторам.',
+        okText: 'Да',
+        cancelText: 'Отмена',
+        onOk() {
+          resolve();
+        },
+        onCancel() {
+          reject();
+        },
+      });
     });
-    // и return этого состояния тут*/
   }
 
   render() {

@@ -20,30 +20,30 @@ class Step2 extends Component {
 
   okCard = (creditCard) => {
     return new Promise((resolve, reject) => {
-      setTimeout(async ()=> {
+      setTimeout(()=> {
         this.props.updateFormData({
           name: 'creditCard',
           value: creditCard
         });
         console.log('Обновлен стейт StationPage');
-        if (!(await this.props.debitMoney())) {
+        this.props.debitMoney().then(() => {
+          console.log('Закрываем модалку и ставим успешность 2 этапа');
+          this.setState({
+            success: true,
+            visibleSecure3D: false,
+            visiblePayPass: false,
+          });
+          resolve();
+        },() => {
           console.log('Отмена оплаты пользователем или сервером');
           this.props.updateFormData({
             name: 'creditCard',
             value: ''
           });
-          reject;
-          return;
-        }
-        console.log('Закрываем модалку и ставим успешность 2 этапа');
-        this.setState({
-          success: true,
-          visibleSecure3D: false,
-          visiblePayPass: false,
+          reject();
         });
-        resolve;
       }, 5000);
-    }).catch(() => console.log('Step2.js > okCard() - Error'));
+    });
   }
 
   cancelSecure3D = () => {

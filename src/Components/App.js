@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Layout, Icon } from 'antd';
+import { Layout, Icon, Spin } from 'antd';
 import { CustomMenu } from './CustomMenu';
 import { NotFound } from './Pages';
 import pages from './PagesList';
@@ -14,7 +14,13 @@ class App extends Component {
     routes: [
       '/station',
       '/not_station'
-    ]
+    ],
+    loading: false,
+    toggleLoader: this.toggleLoader,
+  };
+
+  toggleLoader = (loading) => {
+    this.setState({ loading });
   };
 
   toggleSider = () => {
@@ -76,6 +82,20 @@ class App extends Component {
             <Route path="*" component={() => <NotFound />}/>
             </Switch>
           </Content>
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            zIndex: 1000,
+            display: (this.state.loading) ? 'block' : 'none'
+          }}>
+            <Spin
+              spinning={this.state.loading}
+            />
+          </div>
         </Layout>
       </Router>
     );

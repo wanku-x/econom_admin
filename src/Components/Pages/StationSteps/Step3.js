@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
-import { Form, Input } from 'antd';
+import React, { Component, Fragment } from 'react';
+import { Row, Col, Button } from 'antd';
 
 class Step3 extends Component {
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const FormItem = Form.Item;
-
+    const ButtonGroup = Button.Group
     const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
-      },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 16 },
@@ -18,24 +12,37 @@ class Step3 extends Component {
     };
 
     return (
-      <Form>
-        <FormItem
-          {...formItemLayout}
-          label="Ставка"
-        >
-          {getFieldDecorator('email', {
-            rules: [{
-              type: 'number', message: 'The input is not valid E-mail!',
-            }, {
-              required: true, message: 'Please input your E-mail!',
-            }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-      </Form>
+      <Fragment>
+        <Row type="flex" style={{flexDirection: 'column'}} align="middle" justify="center" className="steps-content">
+          <Col {...formItemLayout.wrapperCol} className="ant-form-item-control">
+            <ButtonGroup style={{display: 'block'}}>
+              <Button
+                type="primary"
+                size="large"
+                style={{width: '50%'}}
+              >
+                Поражение
+              </Button>
+              <Button
+                type="primary"
+                size="large"
+                style={{width: '50%'}}
+              >
+                Победа
+              </Button>
+            </ButtonGroup>
+          </Col>
+        </Row>
+        <div className="steps-action">
+          <Button
+            style={{ float: '' }}
+          >
+            Назад
+          </Button>
+        </div>
+      </Fragment>
     )
   }
 }
 
-export default Form.create()(Step3);
+export default Step3;

@@ -61,7 +61,7 @@ class StationPage extends Component {
               message.error('На счёте недостаточно средств')
               reject();
             }
-          }, 5000);
+          }, 1000);
         },
         onCancel() {
           reject();

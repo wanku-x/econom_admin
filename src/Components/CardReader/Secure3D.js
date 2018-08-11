@@ -19,10 +19,11 @@ class Secure3D extends Component {
       message.error('Вы не ввели номер карты!');
       return;
     }
-    //('Данной карты нет в базе данных');
-    this.setState({loading: true});
-    this.props.onOk(card.substr(-10)).finally(() => {
-      this.setState({loading: false});
+    // check card valid
+    this.setState({loading: true}, ()=>{
+      this.props.onOk(card.substr(-10)).finally(() => {
+        this.setState({loading: false});
+      });
     });
   }
 

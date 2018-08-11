@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Steps, Modal, Row, Col } from 'antd';
+import { Card, Steps, Modal, Row, Col, message } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { Step1, Step2, Step3 } from './StationSteps';
 
 const Step = Steps.Step;
 const confirm = Modal.confirm;
+
 const initialValues = {
   stationId: 1,
   minBet: 1000,
@@ -51,7 +52,16 @@ class StationPage extends Component {
         okText: 'Да',
         cancelText: 'Отмена',
         onOk() {
-          resolve();
+          setTimeout(()=>{
+            const random = Math.random();
+            if (random > 0.5) {
+              message.success('Оплата прошла успешно')
+              resolve();
+            } else {
+              message.error('На счёте недостаточно средств')
+              reject();
+            }
+          }, 5000);
         },
         onCancel() {
           reject();
@@ -85,6 +95,7 @@ class StationPage extends Component {
             updateFormData={this.updateFormData}
             debitMoney={this.debitMoney}
             prev={this.prev}
+            next={this.next}
           />
         ),
         icon: <FontAwesomeIcon icon={faCreditCard} size={'1x'} />

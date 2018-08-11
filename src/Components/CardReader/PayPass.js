@@ -4,9 +4,18 @@ import { Loader } from '../Loader';
 import MaskedInput from 'react-maskedinput';
 
 class PayPass extends Component {
+  constructor(props) {
+    super(props);
+    this.locked = false;
+  }
+
   state = {
     creditCard: '',
-    loading: false
+    loading: false,
+  }
+
+  toggleLock = (lock) => {
+    this.locked = lock;
   }
 
   onChange = (e) => {
@@ -15,17 +24,26 @@ class PayPass extends Component {
 
   onSubmit = (evt) => {
     evt.preventDefault();
-    const card = this.state.creditCard.replace(/_/g, '').substr(-10);
-    if (card.length!=10) {
-      this.setState({creditCard: ''});
-      message.error('Попробуйте считать карту снова');
-      return;
+    if (!this.locked) {
+      this.toggleLock(true);
+      const card = this.state.creditCard.replace(/_/g, '').substr(-10);
+      if (card.length!=10) {
+        this.setState({creditCard: ''});
+        message.error('Попробуйте считать карту снова');
+        this.toggleLock(false);
+        return;
+      }
+      // check card valid
+      this.setState({loading: true}, () => {
+        this.props.onOk(card).finally(() => {
+          this.setState({
+            creditCard: '',
+            loading: false
+          });
+          this.toggleLock(false);
+        });
+      });
     }
-    // if (!fetch) { message.error('Данной карты нет в базе данных'); return;}
-    this.setState({loading: true});
-    this.props.onOk(card).finally(() => {
-      this.setState({loading: false});
-    });
   }
 
   focusInput = () => {

@@ -33,13 +33,6 @@ class Step3 extends Component {
             </ButtonGroup>
           </Col>
         </Row>
-        <div className="steps-action">
-          <Button
-            style={{ float: '' }}
-          >
-            Назад
-          </Button>
-        </div>
       </Fragment>
     )
   }

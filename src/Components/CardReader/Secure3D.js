@@ -15,7 +15,7 @@ class Secure3D extends Component {
 
   onOk = (creditCard) => {
     const card = creditCard.replace(/\s/g, '').replace(/_/g, '');
-    if (card.length != 16) {
+    if (card.length !== 16) {
       message.error('Вы не ввели номер карты!');
       return;
     }

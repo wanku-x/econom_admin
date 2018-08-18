@@ -1,10 +1,10 @@
 @import '~antd/dist/antd.css';
 @font-face {
   font-family: 'OCRAStd';
-  src: url('../fonts/OCRAStd.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/OCRAStd.woff') format('woff'),
-    url('../fonts/OCRAStd.ttf')  format('truetype'),
-    url('../fonts/OCRAStd.svg#OCRAStd') format('svg');
+  src: url('../../fonts/OCRAStd.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/OCRAStd.woff') format('woff'),
+    url('../../fonts/OCRAStd.ttf')  format('truetype'),
+    url('../../fonts/OCRAStd.svg#OCRAStd') format('svg');
   font-weight: normal;
   font-style: normal;
 }

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Modal, Row, message } from 'antd';
+import { Modal, Row, Alert, message } from 'antd';
 import { Loader } from '../Loader';
 import MaskedInput from 'react-maskedinput';
 
@@ -27,7 +27,7 @@ class PayPass extends Component {
     if (!this.locked) {
       this.toggleLock(true);
       const card = this.state.creditCard.replace(/_/g, '').substr(-10);
-      if (card.length!=10) {
+      if (card.length !== 10) {
         this.setState({creditCard: ''});
         message.error('Попробуйте считать карту снова');
         this.toggleLock(false);
@@ -65,7 +65,12 @@ class PayPass extends Component {
           onCancel={() => this.props.onCancel()}
         >
           <Row type="flex" style={{flexDirection: 'column'}} justify="center">
-            <p>Поднесите карту к устройству</p>
+            <Alert
+              message="Помощь"
+              description="Поднесите карту к считывающему устройству. Удостоверьтесь, что считывающее устройство подключено к компьютеру"
+              type="info"
+              showIcon
+            />
             <form onSubmit={this.onSubmit}>
               <MaskedInput
                 autoFocus

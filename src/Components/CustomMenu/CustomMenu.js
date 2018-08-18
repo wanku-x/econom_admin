@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Menu } from 'antd';
 import pages from '../PagesList';
 
@@ -22,9 +24,12 @@ class CustomMenu extends Component {
           return false;
         }).map((link) => (
           <Menu.Item key={link.path}>
-            <Link to={link.path}>{link.icon}<span style={{paddingLeft: 8}}>{link.name}</span></Link>
+            <Link to={link.path}>{link.icon}{link.name}</Link>
           </Menu.Item>
         ))}
+        <Menu.Item key="/logout">
+          <FontAwesomeIcon icon={faSignOutAlt} size={'1x'} className="anticon"/>Выйти
+        </Menu.Item>
       </Menu>
     );
   }

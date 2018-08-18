@@ -5,23 +5,23 @@ import { StationPage, NotStationPage } from './Pages';
 
 const pages = [
   {
-    path: '/station',
+    path: '/admin/station/',
     exact: true,
-    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} className="anticon" />,
     name: 'Станция',
     component: () => <StationPage />
   },
   {
-    path: '/not_station',
+    path: '/admin/not_station/',
     exact: true,
-    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} className="anticon" />,
     name: 'Добавить команду',
     component: () => <NotStationPage />
   },
   {
-    path: '/not_station_2',
+    path: '/admin/not_station_2/',
     exact: true,
-    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} />,
+    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} className="anticon" />,
     name: 'Депозит',
     component: () => <StationPage />
   },

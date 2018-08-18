@@ -1,103 +1,55 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Layout, Icon, Spin } from 'antd';
-import { CustomMenu } from './CustomMenu';
-import { NotFound } from './Pages';
-import pages from './PagesList';
-import './App.css';
-
-const { Sider, Content, Header } = Layout;
+import { message } from 'antd';
+import { LoginPage, AdminPage, NotFound } from './Pages';
+import { requestGET } from './Requests';
+import { AuthProvider } from './AuthProvider';
+import { Loader } from './Loader';
 
 class App extends Component {
   state = {
-    collapsed: false,
-    routes: [
-      '/station',
-      '/not_station'
-    ],
-    loading: false,
-    toggleLoader: this.toggleLoader,
+    checkAuth: false,
+    isLoggedIn: (window.localStorage.getItem('username') ? true : false),
   };
 
-  toggleLoader = (loading) => {
-    this.setState({ loading });
-  };
-
-  toggleSider = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
+  componentDidMount = () => {
+    requestGET('/api/v1/is_logged_in/').then((result)=>{
+      if (result.username) {
+        window.localStorage.setItem('username', result.username);
+        this.setState({
+          checkAuth: true,
+          isLoggedIn: true
+        });
+      } else {
+        window.localStorage.setItem('username', null);
+        this.setState({
+          checkAuth: true,
+          isLoggedIn: false
+        });
+      }
+    }).catch((err)=>{
+      console.log(err);
+      message.error('Ошибка соединения с сервером. Повторите позже');
     });
   }
 
-  closeSider = () => {
-    this.setState({
-      collapsed: true,
-    });
-  }
-
-  openSider = () => {
-    this.setState({
-      collapsed: false,
-    });
+  setLoggedIn = (isLoggedIn) => {
+    this.setState({ isLoggedIn });
   }
 
   render() {
-    return (
+    return this.state.checkAuth ? (
       <Router>
-        <Layout className="wrapper">
-          <Sider
-            breakpoint="md"
-            className="sider"
-            trigger={null}
-            collapsible
-            collapsed={this.state.collapsed}
-            collapsedWidth={0}
-            onCollapse={this.closeSider}
-            onBreakpoint={this.openSider}
-          >
-            <CustomMenu routes={this.state.routes} />
-          </Sider>
-          <Header className="header">
-            <Icon
-              className="trigger"
-              onClick={this.toggleSider}
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-            />
-          </Header>
-          <Content className="content">
-            <Switch>
-            {pages.filter((page) => {
-              if (this.state.routes.indexOf(page.path) >= 0) {
-                return true;
-              }
-              return false;
-            }).map((page, index) => (
-              <Route
-                key={index}
-                path={page.path}
-                exact={page.exact}
-                component={page.component}
-              />
-            ))}
-            <Route path="*" component={() => <NotFound />}/>
-            </Switch>
-          </Content>
-          <div style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            zIndex: 1000,
-            display: (this.state.loading) ? 'block' : 'none'
-          }}>
-            <Spin
-              spinning={this.state.loading}
-            />
-          </div>
-        </Layout>
+        <AuthProvider value={this.state.isLoggedIn}>
+          <Switch>
+            <Route exact path="/" render={() => <LoginPage setLoggedIn={this.setLoggedIn}/>} />
+            <Route path="/admin" render={() => <AdminPage/>} />
+            <Route component={NotFound} />
+          </Switch>
+        </AuthProvider>
       </Router>
+    ):(
+      <Loader isOpen={true} />
     );
   }
 }

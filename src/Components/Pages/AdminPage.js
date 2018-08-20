@@ -65,7 +65,7 @@ class AdminPage extends Component {
           onBreakpoint={this.openSider}
         >
           {this.state.loading ? (null):(
-            <CustomMenu routes={this.state.routes} />
+            <CustomMenu routes={this.state.routes} setLoggedIn={this.props.setLoggedIn}/>
           )}
         </Sider>
         <Header className="header">
@@ -91,6 +91,7 @@ class AdminPage extends Component {
                   component={page.component}
                 />
               ))}
+              <Route key="1" path={pages[1].path} exact component={pages[1].component} /> 
               <Route exact path="/admin" render={() => <Redirect to={this.state.routes[0]} />} />
               <Route component={NotFound} />
             </Switch>

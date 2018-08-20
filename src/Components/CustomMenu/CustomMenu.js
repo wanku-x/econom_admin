@@ -2,10 +2,31 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
+import { requestGET } from '../Requests';
 import pages from '../PagesList';
+import { Loader } from '../Loader';
 
 class CustomMenu extends Component {
+  state = {
+    loading: false
+  }
+
+  logout = () => {
+    this.setState({ loading: true }, () => {
+      requestGET('/logout').then((result)=>{
+        if (result.success) {
+          this.props.setLoggedIn(false);
+        }
+      }).catch((err)=>{
+        console.log(err);
+        message.error('Ошибка соединения с сервером. Повторите позже');
+      }).finally(()=>{
+        this.setState({ loading: false });
+      });
+    });
+  }
+
   render() {
     const { routes } = this.props;
     const { pathname } = this.props.location;
@@ -27,9 +48,13 @@ class CustomMenu extends Component {
             <Link to={link.path}>{link.icon}{link.name}</Link>
           </Menu.Item>
         ))}
-        <Menu.Item key="/logout">
+        <Menu.Item key={pages[1].path}>
+          <Link to={pages[1].path}>{pages[1].icon}{pages[1].name}</Link>
+        </Menu.Item>
+        <Menu.Item key="/logout" onClick={this.logout}>
           <FontAwesomeIcon icon={faSignOutAlt} size={'1x'} className="anticon"/>Выйти
         </Menu.Item>
+        <Loader isOpen={this.state.loading} />
       </Menu>
     );
   }

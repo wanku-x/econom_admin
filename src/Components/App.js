@@ -9,27 +9,21 @@ import { Loader } from './Loader';
 class App extends Component {
   state = {
     checkAuth: false,
-    isLoggedIn: (window.localStorage.getItem('username') ? true : false),
+    isLoggedIn: false,
   };
 
   componentDidMount = () => {
     requestGET('/api/v1/is_logged_in/').then((result)=>{
-      if (result.username) {
-        window.localStorage.setItem('username', result.username);
-        this.setState({
-          checkAuth: true,
-          isLoggedIn: true
-        });
+      if (result.is_logged_in) {
+        this.setState({ isLoggedIn: true });
       } else {
-        window.localStorage.setItem('username', null);
-        this.setState({
-          checkAuth: true,
-          isLoggedIn: false
-        });
+        this.setState( {isLoggedIn: false });
       }
     }).catch((err)=>{
       console.log(err);
       message.error('Ошибка соединения с сервером. Повторите позже');
+    }).finally(()=>{
+      this.setState({ checkAuth: true });
     });
   }
 
@@ -43,7 +37,7 @@ class App extends Component {
         <AuthProvider value={this.state.isLoggedIn}>
           <Switch>
             <Route exact path="/" render={() => <LoginPage setLoggedIn={this.setLoggedIn}/>} />
-            <Route path="/admin" render={() => <AdminPage/>} />
+            <Route path="/admin" render={() => <AdminPage setLoggedIn={this.setLoggedIn}/>} />
             <Route component={NotFound} />
           </Switch>
         </AuthProvider>

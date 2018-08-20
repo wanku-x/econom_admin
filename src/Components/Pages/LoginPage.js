@@ -9,7 +9,6 @@ const FormItem = Form.Item;
 
 class LoginPage extends Component {
   state = {
-    success: false,
     loading: false,
   };
 
@@ -38,20 +37,9 @@ class LoginPage extends Component {
         this.setState({loading: true}, () => {
           requestPOST('/login/', values).then((result)=>{
             if (result.success) {
-              requestGET('/api/v1/is_logged_in/').then((result)=>{
-                if (result.username) {
-                  window.localStorage.setItem('username', result.username);
-                  this.props.setLoggedIn(true);
-                } else {
-                  window.localStorage.setItem('username', null);
-                  message.error('Непредвиденная ошибка. Обновите страницу и попробуйте снова');
-                }
-              }).catch((err)=>{
-                console.log(err);
-                message.error('Ошибка соединения с сервером. Повторите позже');
-              });
+              this.props.setLoggedIn(true);
             } else {
-              message.error('Не верный логин или пароль');
+              message.error('Неверный логин или пароль');
             }
           }).catch((err)=>{
             console.log(err);
@@ -69,10 +57,11 @@ class LoginPage extends Component {
     return (
       <Row type="flex" justify="center" align="middle" className="row">
         <Col xs={{ span: 24 }} sm={{ span: 16 }} md={{ span: 12 }} lg={{ span: 9 }} xl={{ span: 8 }}>
-          <Card>
+          <Card title="Вход">
             <Form onSubmit={this.handleSubmit} className='login-form'>
               <FormItem>
                 {getFieldDecorator('username', {
+                  initialValue: '',
                   rules: [{
                     validator: this.checkUsername
                   }],
@@ -82,6 +71,7 @@ class LoginPage extends Component {
               </FormItem>
               <FormItem>
                 {getFieldDecorator('password', {
+                  initialValue: '',
                   rules: [{ validator: this.checkPassword }],
                 })(
                   <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Пароль" />

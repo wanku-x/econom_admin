@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { StationPage, NotStationPage } from './Pages';
+import { faShoppingCart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { StationPage, AddStation, AddGroup } from './Pages';
 
 const pages = [
   {
@@ -12,18 +12,18 @@ const pages = [
     component: () => <StationPage />
   },
   {
-    path: '/admin/not_station/',
+    path: '/admin/add_station/',
+    exact: true,
+    icon: <FontAwesomeIcon icon={faCartPlus} size={'1x'} className="anticon" />,
+    name: 'Добавить станцию',
+    component: () => <AddStation />
+  },
+  {
+    path: '/admin/add_group/',
     exact: true,
     icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} className="anticon" />,
     name: 'Добавить команду',
-    component: () => <NotStationPage />
-  },
-  {
-    path: '/admin/not_station_2/',
-    exact: true,
-    icon: <FontAwesomeIcon icon={faShoppingCart} size={'1x'} className="anticon" />,
-    name: 'Депозит',
-    component: () => <StationPage />
+    component: () => <AddGroup />
   },
 ];
 

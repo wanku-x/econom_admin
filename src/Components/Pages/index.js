@@ -1,7 +1,8 @@
 import StationPage from './StationPage';
-import NotStationPage from './NotStationPage';
+import AddStation from './AddStation';
 import NotFound from './NotFound';
 import LoginPage from './LoginPage';
 import AdminPage from './AdminPage';
+import AddGroup from './AddGroup';
 
-export { StationPage, NotStationPage, NotFound, LoginPage, AdminPage };
+export { StationPage, AddStation, AddGroup, NotFound, LoginPage, AdminPage };

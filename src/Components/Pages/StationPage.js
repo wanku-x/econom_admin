@@ -70,23 +70,20 @@ class StationPage extends Component {
     });
   }
 
-  confirmResult = (result, answer, data) => {
+  confirmResult = (result) => {
     return new Promise((resolve, reject) => {
-      if (result == false) {
+      let answer
+      let data = {
+        stationId: this.state.formData.stationId,
+        creditCard: this.state.formData.creditCard,
+      }
+      if (!result) {
         answer = 'поражение',
-        data = {
-          stationId: this.state.formData.stationId,
-          creditCard: this.state.formData.creditCard,
-          prize: 0
-        }
+        data['prize'] = 0
       }
       else {
         answer = 'победу',
-        data = {
-          stationId: this.state.formData.stationId,
-          creditCard: this.state.formData.creditCard,
-          prize: this.state.formData.bet * initialValues.multiplier
-        }
+        data['prize'] = this.state.formData.bet * initialValues.multiplier
       }
       confirm({
         title: `Вы подтвержадете ${answer} команды N?`,

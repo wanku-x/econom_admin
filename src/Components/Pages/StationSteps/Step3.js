@@ -6,30 +6,11 @@ import { Loader } from '../../Loader';
 class Step3 extends Component {
   state = {
     loading: false,
-    victory: ''
-  }
-
-  setResult = (result) => {
-    return new Promise((resolve, reject) => {
-      this.props.updateFormData({
-        name: 'victory',
-        value: result
-      });
-      this.props.confirmResult(result).then(() => {
-        resolve();
-      }, () => {
-        this.props.updateFormData({
-          name: 'victory',
-          value: ''
-        });
-        reject();
-      });
-    });
   }
 
   onResult = (result) => {
     this.setState({ loading: true }, () => {
-      this.setResult(result).finally(() => {
+      this.props.confirmResult(result).finally(() => {
         this.setState({ loading: false });
       });
     });

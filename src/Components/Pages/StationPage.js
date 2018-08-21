@@ -22,7 +22,6 @@ class StationPage extends Component {
       stationId: initialValues.stationId,
       bet: 0,
       creditCard: '',
-      victory: ''
     }
   }
 
@@ -71,13 +70,23 @@ class StationPage extends Component {
     });
   }
 
-  confirmResult = (result, answer) => {
+  confirmResult = (result, answer, data) => {
     return new Promise((resolve, reject) => {
       if (result == false) {
-        answer = 'поражение'
+        answer = 'поражение',
+        data = {
+          stationId: this.state.formData.stationId,
+          creditCard: this.state.formData.creditCard,
+          prize: 0
+        }
       }
       else {
-        answer = 'победу'
+        answer = 'победу',
+        data = {
+          stationId: this.state.formData.stationId,
+          creditCard: this.state.formData.creditCard,
+          prize: this.state.formData.bet * initialValues.multiplier
+        }
       }
       confirm({
         title: `Вы подтвержадете ${answer} команды N?`,
@@ -130,7 +139,6 @@ class StationPage extends Component {
         title: 'Выигрыш',
         content: (
           <Step3
-            updateFormData={this.updateFormData}
             confirmResult={this.confirmResult}
           />
         ),

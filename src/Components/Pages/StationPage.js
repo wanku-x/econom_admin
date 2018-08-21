@@ -22,6 +22,7 @@ class StationPage extends Component {
       stationId: initialValues.stationId,
       bet: 0,
       creditCard: '',
+      victory: ''
     }
   }
 
@@ -52,7 +53,7 @@ class StationPage extends Component {
         okText: 'Да',
         cancelText: 'Отмена',
         onOk() {
-          setTimeout(()=>{
+          setTimeout(() => {
             const random = Math.random();
             if (random > 0.5) {
               message.success('Оплата прошла успешно')
@@ -61,6 +62,31 @@ class StationPage extends Component {
               message.error('На счёте недостаточно средств')
               reject();
             }
+          }, 1000);
+        },
+        onCancel() {
+          reject();
+        },
+      });
+    });
+  }
+
+  confirmResult = (result, answer) => {
+    return new Promise((resolve, reject) => {
+      if (result == false) {
+        answer = 'поражение'
+      }
+      else {
+        answer = 'победу'
+      }
+      confirm({
+        title: `Вы подтвержадете ${answer} команды N?`,
+        okText: 'Подтвердить',
+        cancelText: 'Отмена',
+        onOk() {
+          setTimeout(() => {
+            message.success('Операция прошла успешно')
+            resolve();
           }, 1000);
         },
         onCancel() {
@@ -102,7 +128,12 @@ class StationPage extends Component {
       },
       {
         title: 'Выигрыш',
-        content: <Step3 />,
+        content: (
+          <Step3
+            updateFormData={this.updateFormData}
+            confirmResult={this.confirmResult}
+          />
+        ),
         icon: <FontAwesomeIcon icon={faTrophy} size={'1x'} />
       }
     ];

@@ -72,19 +72,20 @@ class StationPage extends Component {
 
   confirmResult = (result) => {
     return new Promise((resolve, reject) => {
-      let answer
+      let answer;
       let data = {
         stationId: this.state.formData.stationId,
         creditCard: this.state.formData.creditCard,
+      };
+
+      if (result) {
+        answer = 'победу';
+        data.prize = this.state.formData.bet * initialValues.multiplier;
+      } else {
+        answer = 'поражение';
+        data.prize = 0;
       }
-      if (!result) {
-        answer = 'поражение',
-        data['prize'] = 0
-      }
-      else {
-        answer = 'победу',
-        data['prize'] = this.state.formData.bet * initialValues.multiplier
-      }
+      
       confirm({
         title: `Вы подтвержадете ${answer} команды N?`,
         okText: 'Подтвердить',

@@ -33,7 +33,8 @@ class Step3 extends Component {
               <Button
                 type="primary"
                 size="large"
-                style={{ width: '50%', backgroundColor: 'rgb(239, 48, 56)', borderColor: 'rgb(239, 48, 56)' }}
+                style={{ width: '50%' }}
+                className="button-lose"
                 onClick={() => this.onResult(false)}
               >
                 Поражение
@@ -41,7 +42,8 @@ class Step3 extends Component {
               <Button
                 type="primary"
                 size="large"
-                style={{ width: '50%', backgroundColor: 'rgb(88, 245, 88)', borderColor: 'rgb(88, 245, 88)' }}
+                style={{ width: '50%' }}
+                className="button-win"
                 onClick={() => this.onResult(true)}
               >
                 Победа

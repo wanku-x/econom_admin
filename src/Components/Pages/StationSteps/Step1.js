@@ -77,16 +77,18 @@ class Step1 extends Component {
             </FormItem>
           </Col>
           <Col xs={{span: 24}}>
-            <Col {...formItemLayout.labelCol} className="ant-form-item-label">
-              <label>
-                Выигрыш
-              </label>
-            </Col>
-            <Col {...formItemLayout.wrapperCol} className="ant-form-item-control win-bet">
-              <span>
-                {this.state.bet * this.props.multiplier}$
-              </span>
-            </Col>
+            <FormItem>
+              <Col {...formItemLayout.labelCol} className="ant-form-item-label">
+                <label>
+                  Выигрыш
+                </label>
+              </Col>
+              <Col {...formItemLayout.wrapperCol} className="ant-form-item-control win-bet">
+                <span>
+                  {this.state.bet * this.props.multiplier}$
+                </span>
+              </Col>
+            </FormItem>
           </Col>
         </Row>
         <div className="steps-action">

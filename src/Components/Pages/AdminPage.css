@@ -53,19 +53,13 @@
 }
 
 .credit-card {
-  background-color: #1890ff;
-  background-size: contain;
-  background-repeat: no-repeat;
-  border-radius: 20px;
-  height: 295px;
-  padding: 40px;
+  padding: 40px 0 20px;
 }
 
 .credit-card-input {
   background-color: #40a9ff;
   color: #fff;
   font-family: 'OCRAStd';
-  font-size: 26px;
   text-align: center;
   width: 100%;
 }
@@ -82,6 +76,54 @@
   font-size: 3rem;
 }
 
+.button-win {
+  background-color: #f6ffed;
+  border-color: #b7eb8f;
+  color: #52c41a;
+}
+
+.button-win:hover {
+  background-color: #52c41a;
+  border-color: #b7eb8f;
+}
+
+.ant-btn-group .ant-btn-primary.button-win:last-child:not(:first-child),
+.ant-btn-group .ant-btn-primary.button-win + .ant-btn-primary {
+  border-left-color: #b7eb8f;
+}
+
+.button-lose {
+  background-color: #fff1f0;
+  border-color: #ffa39e;
+  color: #f5222d;
+}
+
+.button-lose:hover {
+  background-color: #f5222d;
+  border-color: #ffa39e;
+}
+
+.ant-btn-group .ant-btn-primary.button-lose:first-child:not(:last-child) {
+  border-right-color: #ffa39e;
+}
+
+@media (min-width: 576px) {
+  .credit-card {
+    background-color: #1890ff;
+    border-radius: 20px;
+    height: 295px;
+    padding: 40px;
+  }
+
+  .credit-card-input {
+    font-size: 26px;
+  }
+
+  .win-bet {
+    text-align: right;
+  }
+}
+
 @media (min-width: 769px) {
   .header {
     display: none;
@@ -94,9 +136,5 @@
 
   .steps-content {
     min-height: 300px;
-  }
-  
-  .win-bet {
-    text-align: right;
   }
 }

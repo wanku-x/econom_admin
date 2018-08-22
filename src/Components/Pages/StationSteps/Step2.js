@@ -52,6 +52,7 @@ class Step2 extends Component {
   }
 
   render() {
+    const FormItem = Form.Item
     const ButtonGroup = Button.Group
     const formItemLayout = {
       labelCol: {
@@ -68,43 +69,45 @@ class Step2 extends Component {
       <Fragment>
         <Row type="flex" style={{flexDirection: 'column'}} justify="center" className="steps-content">
           <Col xs={{span: 24}}>
-            <Col {...formItemLayout.labelCol} className="ant-form-item-label">
-              <label>
-                Тип оплаты
-              </label>
-            </Col>
-            <Col {...formItemLayout.wrapperCol} className="ant-form-item-control">
-              <ButtonGroup style={{display: 'block'}}>
-                <Button
-                  type="primary"
-                  size="large"
-                  style={{width: '50%'}}
-                  disabled={this.state.success}
-                  onClick={() => this.showSecure3D(true)}
-                >
-                  3D Secure
-                </Button>
-                <Button
-                  type="primary"
-                  size="large"
-                  style={{width: '50%'}}
-                  disabled={this.state.success}
-                  onClick={()=> this.showPayPass(true)}
-                >
-                  PayPass
-                </Button>
-              </ButtonGroup>
-              <Secure3D
-                visible={this.state.visibleSecure3D}
-                onOk={this.okCard}
-                onCancel={this.cancelSecure3D}
-              />
-              <PayPass
-                visible={this.state.visiblePayPass}
-                onOk={this.okCard}
-                onCancel={this.cancelPayPass}
-              />
-            </Col>
+            <FormItem>
+              <Col {...formItemLayout.labelCol} className="ant-form-item-label">
+                <label>
+                  Тип оплаты
+                </label>
+              </Col>
+              <Col {...formItemLayout.wrapperCol} className="ant-form-item-control">
+                <ButtonGroup style={{display: 'block'}}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    style={{width: '50%'}}
+                    disabled={this.state.success}
+                    onClick={() => this.showSecure3D(true)}
+                  >
+                    3D Secure
+                  </Button>
+                  <Button
+                    type="primary"
+                    size="large"
+                    style={{width: '50%'}}
+                    disabled={this.state.success}
+                    onClick={()=> this.showPayPass(true)}
+                  >
+                    PayPass
+                  </Button>
+                </ButtonGroup>
+                <Secure3D
+                  visible={this.state.visibleSecure3D}
+                  onOk={this.okCard}
+                  onCancel={this.cancelSecure3D}
+                />
+                <PayPass
+                  visible={this.state.visiblePayPass}
+                  onOk={this.okCard}
+                  onCancel={this.cancelPayPass}
+                />
+              </Col>
+            </FormItem>
           </Col>
         </Row>
         <div className="steps-action">

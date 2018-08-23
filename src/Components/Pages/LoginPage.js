@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Form, Icon, Input, Button, message } from 'antd';
-import { requestPOST, requestGET } from '../Requests';
+import { requestPOST } from '../Requests';
 import { withAuthEnter } from '../AuthProvider';
 import { Loader } from '../Loader';
 import './LoginPage.css';

@@ -36,6 +36,10 @@
   margin-bottom: 16px;
 }
 
+.card-content-wrapper {
+  min-height: 70vh;
+}
+
 .steps-content {
   margin-top: 16px;
   padding-bottom: 4px;

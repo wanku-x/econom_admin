@@ -11,7 +11,7 @@ class AddGroup extends Component {
         align="middle"
       >
         <Col xs={{ span: 24 }}>
-          <Card className="card">
+          <Card className="card" title="Добавить команду">
             <Alert
               message="Информация"
               description="Страница добавления команд"

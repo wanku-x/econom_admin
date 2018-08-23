@@ -13,7 +13,8 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    requestGET('/api/v1/is_logged_in/').then((result)=>{
+    this.setState({ checkAuth: true, isLoggedIn: true });
+    /*requestGET('/api/v1/is_logged_in/').then((result)=>{
       if (result.is_logged_in) {
         this.setState({ isLoggedIn: true });
       } else {
@@ -24,7 +25,7 @@ class App extends Component {
       message.error('Ошибка соединения с сервером. Повторите позже');
     }).finally(()=>{
       this.setState({ checkAuth: true });
-    });
+    });*/
   }
 
   setLoggedIn = (isLoggedIn) => {

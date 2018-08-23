@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 class Step1 extends Component {
   state = {

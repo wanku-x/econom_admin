@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button } from 'antd';
 import { Secure3D, PayPass } from '../../CardReader';
 
 class Step2 extends Component {

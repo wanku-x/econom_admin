@@ -58,39 +58,32 @@ class Step1 extends Component {
 
     return (
       <Fragment>
-        <Row type="flex" style={{flexDirection: 'column'}} justify="center" className="steps-content">
-          <Col xs={{span: 24}}>
-            <FormItem
-              {...formItemLayout}
-              label="Ставка"
-            >
-              {getFieldDecorator('bet', {
-                initialValue: this.state.bet ,
-                normalize: this.changeBet,
-                rules: [{ validator: this.checkBet }],
-              })(
-                <Input
-                  suffix="$"
-                  size="large"
-                />
-              )}
-            </FormItem>
-          </Col>
-          <Col xs={{span: 24}}>
-            <FormItem>
-              <Col {...formItemLayout.labelCol} className="ant-form-item-label">
-                <label>
-                  Выигрыш
-                </label>
-              </Col>
-              <Col {...formItemLayout.wrapperCol} className="ant-form-item-control win-bet">
-                <span>
-                  {this.state.bet * this.props.multiplier}$
-                </span>
-              </Col>
-            </FormItem>
-          </Col>
-        </Row>
+        <div style={{ minHeight: '150px' }}>
+          <FormItem
+            {...formItemLayout}
+            label="Ставка"
+          >
+            {getFieldDecorator('bet', {
+              initialValue: this.state.bet ,
+              normalize: this.changeBet,
+              rules: [{ validator: this.checkBet }],
+            })(
+              <Input
+                suffix="$"
+                size="large"
+                autoComplete={false}
+              />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="Выигрыш"
+          >
+            <div className="win-bet">
+              {this.state.bet * this.props.multiplier}$
+            </div>
+          </FormItem>
+        </div>
         <div className="steps-action">
           <Button
             style={{ float: 'right' }}

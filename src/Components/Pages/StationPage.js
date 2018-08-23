@@ -153,12 +153,19 @@ class StationPage extends Component {
       >
         <Col xs={{ span: 24 }}>
           <Card className="card">
-            <Steps current={current}>
-              {stationSteps.map((item, index) => (
-                <Step key={index} title={item.title} icon={item.icon} />
-              ))}
-            </Steps>
-            {stationSteps[current].content}
+            <Row
+              style={{ flexDirection: 'column' }}
+              type="flex"
+              justify="space-between"
+              className="card-content-wrapper"
+            >
+              <Steps current={current}>
+                {stationSteps.map((item, index) => (
+                  <Step key={index} title={item.title} icon={item.icon} />
+                ))}
+              </Steps>
+              {stationSteps[current].content}
+            </Row>
           </Card>
         </Col>
       </Row>

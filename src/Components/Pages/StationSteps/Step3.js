@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Row, Col, Button } from 'antd';
 import { Loader } from '../../Loader';
+import FormItem from 'antd/lib/form/FormItem';
 
 
 class Step3 extends Component {
@@ -21,14 +22,16 @@ class Step3 extends Component {
     const formItemLayout = {
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 16, offset: 4 },
       },
     };
 
     return (
       <Fragment>
-        <Row type="flex" style={{ flexDirection: 'column' }} align="middle" justify="center" className="steps-content">
-          <Col {...formItemLayout.wrapperCol} className="ant-form-item-control">
+        <div>
+          <FormItem
+            {...formItemLayout}
+          >
             <ButtonGroup style={{ display: 'block' }}>
               <Button
                 type="primary"
@@ -50,8 +53,9 @@ class Step3 extends Component {
               </Button>
             </ButtonGroup>
             <Loader isOpen={this.state.loading} />
-          </Col>
-        </Row>
+          </FormItem>
+        </div>
+        <div style={{ height: '32px' }} />
       </Fragment>
     )
   }

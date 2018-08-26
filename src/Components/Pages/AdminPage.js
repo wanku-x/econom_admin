@@ -95,6 +95,8 @@ class AdminPage extends Component {
               <Route key="2" path={pages[2].path} exact component={pages[2].component} />
               <Route key="3" path={pages[3].path} exact component={pages[3].component} />
               <Route key="4" path={pages[4].path} exact component={pages[4].component} />
+              <Route key="5" path={pages[5].path} exact component={pages[5].component} />
+              <Route key="6" path={pages[6].path} exact component={pages[6].component} />
               <Route exact path="/admin" render={() => <Redirect to={this.state.routes[0]} />} />
               <Route component={NotFound} />
             </Switch>

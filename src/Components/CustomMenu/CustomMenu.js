@@ -60,6 +60,12 @@ class CustomMenu extends Component {
         <Menu.Item key={pages[4].path}>
           <Link to={pages[4].path}>{pages[4].icon}{pages[4].name}</Link>
         </Menu.Item>
+        <Menu.Item key={pages[5].path}>
+          <Link to={pages[5].path}>{pages[5].icon}{pages[5].name}</Link>
+        </Menu.Item>
+        <Menu.Item key={pages[6].path}>
+          <Link to={pages[6].path}>{pages[6].icon}{pages[6].name}</Link>
+        </Menu.Item>
         <Menu.Item key="/logout" onClick={this.logout}>
           <FontAwesomeIcon icon={faSignOutAlt} size={'1x'} className="anticon"/>Выйти
         </Menu.Item>

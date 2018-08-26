@@ -19,7 +19,6 @@ class StationPage extends Component {
   state = {
     current: 0,
     formData: {
-      stationId: initialValues.stationId,
       bet: 0,
       creditCard: '',
     }
@@ -33,6 +32,16 @@ class StationPage extends Component {
   prev = () => {
     const current = this.state.current - 1;
     this.setState({ current });
+  }
+
+  clear = () => {
+    this.setState({
+      current: 0,
+      formData: {
+        bet: 0,
+        creditCard: '',
+      }
+    });
   }
 
   updateFormData = (e) => {
@@ -92,7 +101,7 @@ class StationPage extends Component {
         cancelText: 'Отмена',
         onOk() {
           setTimeout(() => {
-            message.success('Операция прошла успешно')
+            message.success('Операция прошла успешно');
             resolve();
           }, 1000);
         },
@@ -138,6 +147,7 @@ class StationPage extends Component {
         content: (
           <Step3
             confirmResult={this.confirmResult}
+            clear={this.clear}
           />
         ),
         icon: <FontAwesomeIcon icon={faTrophy} size={'1x'} />

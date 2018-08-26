@@ -12,7 +12,9 @@ class Step3 extends Component {
   onResult = (result) => {
     this.setState({ loading: true }, () => {
       this.props.confirmResult(result).finally(() => {
-        this.setState({ loading: false });
+        this.setState({ loading: false }, () => {
+          this.props.clear();
+        });
       });
     });
   }

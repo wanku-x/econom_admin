@@ -60,7 +60,7 @@ class LoginPage extends Component {
           <Card title="Вход">
             <Form onSubmit={this.handleSubmit} className='login-form'>
               <FormItem>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('email', {
                   initialValue: '',
                   rules: [{
                     validator: this.checkUsername

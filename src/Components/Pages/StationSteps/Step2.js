@@ -87,7 +87,7 @@ class Step2 extends Component {
                 size="large"
                 style={{width: '50%'}}
                 disabled={this.state.success}
-                onClick={()=> this.showPayPass(true)}
+                onClick={() => this.showPayPass(true)}
               >
                 PayPass
               </Button>

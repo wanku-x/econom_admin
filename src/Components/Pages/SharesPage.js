@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Tabs, Form, Input, Button } from 'antd';
+import { Row, Col, Card, Tabs, Form, Input, Button, Select, InputNumber } from 'antd';
 
-class DepositPage extends Component {
+class SharesPage extends Component {
   changeDeposit = (value, prevValue) => {
     const number = parseInt(value || 0, 10);
     if (
@@ -26,6 +26,7 @@ class DepositPage extends Component {
     const TabPane = Tabs.TabPane;
     const FormItem = Form.Item;
     const ButtonGroup = Button.Group;
+    const Option = Select.Option;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -51,7 +52,7 @@ class DepositPage extends Component {
         <Col xs={{ span: 24 }}>
           <Card className="card">
             <Tabs defaultActiveKey="1">
-              <TabPane tab="Вложить средства" key="1">
+              <TabPane tab="Выдать акции" key="1">
                 <Row
                   style={{ flexDirection: 'column' }}
                   type="flex"
@@ -61,18 +62,28 @@ class DepositPage extends Component {
                   <Form>
                     <FormItem
                       {...formItemLayout}
-                      label="Сумма"
+                      label="Акции"
                     >
-                      {getFieldDecorator('deposit', {
-                        initialValue: 0 ,
-                        normalize: this.changeDeposit,
-                        rules: [{ validator: this.checkDeposit }],
-                      })(
-                        <Input
-                          suffix="$"
-                          size="large"
-                        />
-                      )}
+                      <Select
+                        defaultValue={1}
+                        style={{ width: '100%' }}
+                        size="large"
+                      >
+                        <Option value={1}>Акция 1</Option>
+                        <Option value={2}>Акция 2</Option>
+                        <Option value={3}>Акция 3</Option>
+                        <Option value={4}>Акция 4</Option>
+                        <Option value={5}>Акция 5</Option>
+                        <Option value={6}>Крипта</Option>
+                      </Select>
+                    </FormItem>
+                    <FormItem
+                      {...formItemLayout}
+                      label="Количество"
+                    >
+                      <InputNumber
+                        size="large"
+                      />
                     </FormItem>
                     <FormItem
                       {...formItemLayout}
@@ -98,14 +109,14 @@ class DepositPage extends Component {
                     <FormItem>
                       <Col {...formButtonLayout}>
                         <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
-                          Вложить
+                          Выдать
                         </Button>
                       </Col>
                     </FormItem>
                   </Form>
                 </Row>
               </TabPane>
-              <TabPane tab="Снять средства" key="2">
+              <TabPane tab="Изъять акции" key="2">
                 <Row
                   style={{ flexDirection: 'column' }}
                   type="flex"
@@ -113,20 +124,30 @@ class DepositPage extends Component {
                   className="card-content-wrapper"
                 >
                   <Form>
+                  <FormItem
+                      {...formItemLayout}
+                      label="Акции"
+                    >
+                      <Select
+                        defaultValue={1}
+                        style={{ width: '100%' }}
+                        size="large"
+                      >
+                        <Option value={1}>Акция 1</Option>
+                        <Option value={2}>Акция 2</Option>
+                        <Option value={3}>Акция 3</Option>
+                        <Option value={4}>Акция 4</Option>
+                        <Option value={5}>Акция 5</Option>
+                        <Option value={6}>Крипта</Option>
+                      </Select>
+                    </FormItem>
                     <FormItem
                       {...formItemLayout}
-                      label="Сумма"
+                      label="Количество"
                     >
-                      {getFieldDecorator('deposit', {
-                        initialValue: 0 ,
-                        normalize: this.changeDeposit,
-                        rules: [{ validator: this.checkDeposit }],
-                      })(
-                        <Input
-                          suffix="$"
-                          size="large"
-                        />
-                      )}
+                      <InputNumber
+                        size="large"
+                      />
                     </FormItem>
                     <FormItem
                       {...formItemLayout}
@@ -152,7 +173,7 @@ class DepositPage extends Component {
                     <FormItem>
                       <Col {...formButtonLayout}>
                         <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
-                          Снять
+                          Изъять
                         </Button>
                       </Col>
                     </FormItem>
@@ -206,4 +227,4 @@ class DepositPage extends Component {
   }
 }
 
-export default Form.create()(DepositPage);
+export default Form.create()(SharesPage);

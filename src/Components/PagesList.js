@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faCartPlus, faUserPlus, faUniversity, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
-import { StationPage, AddStation, AddGroup, DepositPage, CreditPage } from './Pages';
+import { faShoppingCart, faCartPlus, faUserPlus, faUniversity, faHandHoldingUsd, faChartLine, faDonate } from '@fortawesome/free-solid-svg-icons';
+import { StationPage, AddStation, AddGroup, DepositPage, CreditPage, SharesPage, GiveMoney } from './Pages';
 
 const pages = [
   {
@@ -38,6 +38,20 @@ const pages = [
     icon: <FontAwesomeIcon icon={faHandHoldingUsd} size={'1x'} className="anticon" />,
     name: 'Кредит',
     component: () => <CreditPage />
+  },
+  {
+    path: '/admin/shares/',
+    exact: true,
+    icon: <FontAwesomeIcon icon={faChartLine} size={'1x'} className="anticon" />,
+    name: 'Акции',
+    component: () => <SharesPage />
+  },
+  {
+    path: '/admin/give_money/',
+    exact: true,
+    icon: <FontAwesomeIcon icon={faDonate} size={'1x'} className="anticon" />,
+    name: 'Выдать деньги',
+    component: () => <GiveMoney />
   },
 ];
 

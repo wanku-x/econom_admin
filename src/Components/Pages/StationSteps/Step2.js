@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Form, Button } from 'antd';
+import { Form, Button, message } from 'antd';
 import { Secure3D, PayPass } from '../../CardReader';
 
 class Step2 extends Component {
@@ -7,7 +7,6 @@ class Step2 extends Component {
     success: false,
     visibleSecure3D: false,
     visiblePayPass: false,
-    creditCard: ''
   }
 
   showSecure3D = (visibleSecure3D) => {
@@ -18,29 +17,23 @@ class Step2 extends Component {
     this.setState({ visiblePayPass });
   }
 
-  okCard = (creditCard) => {
-    return new Promise((resolve, reject) => {
-      this.props.updateFormData({
-        name: 'creditCard',
-        value: creditCard
-      });
-
-      this.props.debitMoney().then(() => {
+  okCard = (cardObject) => {
+    if (cardObject.success) {
+      this.props.debitMoney({
+        card: cardObject.card,
+        card_type: cardObject.card_type,
+        team_name: cardObject.team_name,
+      }).then(() => {
         this.setState({
           success: true,
           visibleSecure3D: false,
           visiblePayPass: false,
         });
         this.props.next();
-        resolve();
-      },() => {
-        this.props.updateFormData({
-          name: 'creditCard',
-          value: ''
-        });
-        reject();
       });
-    });
+    } else {
+      message.error(cardObject.error);
+    }
   }
 
   cancelSecure3D = () => {
@@ -97,11 +90,13 @@ class Step2 extends Component {
             visible={this.state.visibleSecure3D}
             onOk={this.okCard}
             onCancel={this.cancelSecure3D}
+            okText="Оплатить"
           />
           <PayPass
             visible={this.state.visiblePayPass}
             onOk={this.okCard}
             onCancel={this.cancelPayPass}
+            okText="Оплатить"
           />
         </div>
         <div className="steps-action">

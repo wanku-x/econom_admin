@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Modal, Row, message } from 'antd';
 import { Loader } from '../Loader';
+import { requestPOST } from '../Requests';
 import MaskedInput from 'react-maskedinput';
 
 class Secure3D extends Component {
@@ -19,10 +20,26 @@ class Secure3D extends Component {
       message.error('Вы не ввели номер карты!');
       return;
     }
-    // check card valid
-    this.setState({loading: true}, ()=>{
-      this.props.onOk(card.substr(-10)).finally(() => {
-        this.setState({loading: false});
+    this.setState({ loading: true }, () => {
+      requestPOST('/api/v1/check_card/', {
+        card: card,
+        card_type: 'card_number',
+      }).then((result) => {
+        console.log(result);
+        this.props.onOk({
+          card: card,
+          card_type: 'card_number',
+          success: result.success,
+          error: result.error,
+          team_name: result.team_name,
+        });
+      }).catch((err) => {
+        console.log(err);
+        message.error('Ошибка соединения с сервером. Повторите позже');
+      }).finally(() => {
+        this.setState({
+          loading: false,
+        });
       });
     });
   }
@@ -37,7 +54,7 @@ class Secure3D extends Component {
           closable={false}
           confirmLoading={this.state.loading}
           visible={this.props.visible}
-          okText="Оплатить"
+          okText={this.props.okText}
           cancelText="Отмена"
           onOk={() => this.onOk(this.state.creditCard)}
           onCancel={() => this.props.onCancel()}

@@ -20,7 +20,7 @@ class Step1 extends Component {
       name: 'bet',
       value: number
     });
-    this.setState({bet: number});
+    this.setState({ bet: number });
     return number;
   }
 

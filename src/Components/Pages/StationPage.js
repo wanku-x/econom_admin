@@ -4,24 +4,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faCoins, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Step1, Step2, Step3 } from './StationSteps';
+import { NotFound } from './index';
+import { requestPOST, requestGET } from '../Requests';
+import { Loader } from '../Loader';
 
 const Step = Steps.Step;
 const confirm = Modal.confirm;
 
-const initialValues = {
-  stationId: 1,
-  minBet: 1000,
-  maxBet: 100000,
-  multiplier: 2,
-}
-
 class StationPage extends Component {
   state = {
+    checkStationInfo: 'not_rendered',
     current: 0,
     formData: {
       bet: 0,
-      creditCard: '',
-    }
+      card: '',
+      card_type: '',
+      team_name: '',
+    },
+    stationInfo: {},
+  }
+
+  componentDidMount = () => {
+    requestGET('/api/v1/get_station_info/').then((result) => {
+      if (result.success) {
+        this.setState({
+          stationInfo: result.station,
+          checkStationInfo: 'rendered',
+        });
+      } else {
+        this.setState({
+          checkStationInfo: 'not_found',
+        });
+      }
+    }).catch((err)=>{
+      console.log(err);
+      this.setState({
+        checkStationInfo: 'not_found',
+      });
+      message.error('Ошибка соединения с сервером. Обновите страницу');
+    });
   }
 
   next = () => {
@@ -36,10 +57,13 @@ class StationPage extends Component {
 
   clear = () => {
     this.setState({
+      loading: false,
       current: 0,
       formData: {
         bet: 0,
-        creditCard: '',
+        card: '',
+        card_type: '',
+        team_name: '',
       }
     });
   }
@@ -53,24 +77,40 @@ class StationPage extends Component {
     }));
   }
 
-  debitMoney = () => {
+  debitMoney = (cardObject) => {
+    let self = this;
     return new Promise((resolve, reject) => {
       confirm({
-        title: 'Вы действительно хотите снять средства у команды N?',
-        content: 'Если данная карта не пренадлежит текущей команде, обратитесь к организаторам.',
+        title: 'Вы действительно хотите снять средства у команды ' + cardObject.team_name + '?',
+        content: 'Если данная карта не принадлежит текущей команде, обратитесь к организаторам.',
         okText: 'Да',
         cancelText: 'Отмена',
         onOk() {
-          setTimeout(() => {
-            const random = Math.random();
-            if (random > 0.5) {
-              message.success('Оплата прошла успешно')
+          requestPOST('/api/v1/make_bet/', {
+            bet_amount: self.state.formData.bet,
+            card: cardObject.card,
+            card_type: cardObject.card_type,
+          }).then((result) => {
+            if (result.success) {
+              self.setState((prevState) => ({
+                formData: {
+                  ...prevState.formData,
+                  card: cardObject.card,
+                  card_type: cardObject.card_type,
+                  team_name: cardObject.team_name,
+                }
+              }));
+              message.success('Оплата прошла успешно');
               resolve();
             } else {
-              message.error('На счёте недостаточно средств')
+              message.error(result.error);
               reject();
             }
-          }, 1000);
+          }).catch((err) => {
+            console.log(err);
+            message.error('Ошибка соединения с сервером. Повторите позже');
+            reject();
+          });
         },
         onCancel() {
           reject();
@@ -80,30 +120,32 @@ class StationPage extends Component {
   }
 
   confirmResult = (result) => {
+    let self = this;
     return new Promise((resolve, reject) => {
-      let answer;
-      let data = {
-        stationId: this.state.formData.stationId,
-        creditCard: this.state.formData.creditCard,
-      };
-
-      if (result) {
-        answer = 'победу';
-        data.prize = this.state.formData.bet * initialValues.multiplier;
-      } else {
-        answer = 'поражение';
-        data.prize = 0;
-      }
-      
+      const answer = result ? 'победу' : 'поражение';   
       confirm({
-        title: `Вы подтвержадете ${answer} команды N?`,
+        title: `Вы подтвержадете ${answer} команды ${self.state.formData.team_name}?`,
         okText: 'Подтвердить',
         cancelText: 'Отмена',
         onOk() {
-          setTimeout(() => {
-            message.success('Операция прошла успешно');
-            resolve();
-          }, 1000);
+          requestPOST('/api/v1/victory/', {
+            card: self.state.formData.card,
+            card_type: self.state.formData.card_type,
+            victory: result,
+          }).then((result) => {
+            if (result.success) {
+              message.success('Оплата прошла успешно');
+              self.clear();
+              resolve();
+            } else {
+              message.error(result.error);
+              reject();
+            }
+          }).catch((err) => {
+            console.log(err);
+            message.error('Ошибка соединения с сервером. Повторите позже');
+            reject();
+          });
         },
         onCancel() {
           reject();
@@ -113,7 +155,7 @@ class StationPage extends Component {
   }
 
   render() {
-    const { current, formData } = this.state;
+    const { current, formData, stationInfo } = this.state;
 
     const stationSteps = [
       {
@@ -121,9 +163,9 @@ class StationPage extends Component {
         content: (
           <Step1
             bet={formData.bet}
-            minBet={initialValues.minBet}
-            maxBet={initialValues.maxBet}
-            multiplier={initialValues.multiplier}
+            minBet={stationInfo.min_bet}
+            maxBet={stationInfo.max_bet}
+            multiplier={stationInfo.complexity}
             updateFormData={this.updateFormData}
             next={this.next}
           />
@@ -147,14 +189,13 @@ class StationPage extends Component {
         content: (
           <Step3
             confirmResult={this.confirmResult}
-            clear={this.clear}
           />
         ),
         icon: <FontAwesomeIcon icon={faTrophy} size={'1x'} />
       }
     ];
 
-    return (
+    return this.state.checkStationInfo == 'rendered' ? (
       <Row
         style={{ minHeight: '100%' }}
         type="flex"
@@ -179,7 +220,11 @@ class StationPage extends Component {
           </Card>
         </Col>
       </Row>
-    );
+    ) : (this.state.checkStationInfo == 'not_found' ? (
+      <NotFound />
+    ) : (
+      <Loader isOpen={true} />
+    ));
   }
 }
 

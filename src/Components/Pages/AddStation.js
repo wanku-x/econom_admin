@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Form, Input, InputNumber, Button, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Button, message } from 'antd';
 import { requestPOST } from '../Requests';
 import { Loader } from '../Loader';
 
@@ -20,18 +20,6 @@ class AddStation extends Component {
     return number;
   }
 
-  normalizeComplexity = (value, prevValue) => {
-    const roundNumber = (Math.round(value * 2) / 2).toFixed(1);
-    if (
-      isNaN(roundNumber) ||
-      (roundNumber < 2) ||
-      (roundNumber > 3)
-    ) {
-      return prevValue;
-    }
-    return roundNumber;
-  }
-
   checkString = (rule, value, callback) => {
     if (value.length < 3) {
       callback('Не менее 3 символов');
@@ -44,7 +32,7 @@ class AddStation extends Component {
 
   checkMaxBet = (rule, max_bet, callback) => {
     const min_bet = this.props.form.getFieldValue('min_bet');
-    if (min_bet >= max_bet) {
+    if (min_bet > max_bet) {
       callback('Максимальная ставка меньше минимальной');
     }
     callback();
@@ -54,7 +42,6 @@ class AddStation extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values.complexity = parseFloat(values.complexity);
         this.setState({ loading: true }, () => {
           requestPOST('/api/v1/create_station/', values).then((result)=>{
             if (result.status) {
@@ -76,6 +63,7 @@ class AddStation extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const FormItem = Form.Item;
+    const Option = Select.Option;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -107,10 +95,11 @@ class AddStation extends Component {
               >
                 {getFieldDecorator('name', {
                   initialValue: '',
-                  rules: [{ validator: this.checkString }],
+                  rules: [{ required: true, validator: this.checkString }],
                 })(
                   <Input
                     size="large"
+                    autoComplete="off"
                   />
                 )}
               </FormItem>
@@ -120,10 +109,11 @@ class AddStation extends Component {
               >
                 {getFieldDecorator('owner', {
                   initialValue: '',
-                  rules: [{ validator: this.checkString }],
+                  rules: [{ required: true, validator: this.checkString }],
                 })(
                   <Input
                     size="large"
+                    autoComplete="off"
                   />
                 )}
               </FormItem>
@@ -133,10 +123,11 @@ class AddStation extends Component {
               >
                 {getFieldDecorator('email', {
                   initialValue: '',
-                  rules: [{ validator: this.checkString }],
+                  rules: [{ required: true, validator: this.checkString }],
                 })(
                   <Input
                     size="large"
+                    autoComplete="off"
                   />
                 )}
               </FormItem>
@@ -147,10 +138,12 @@ class AddStation extends Component {
                 {getFieldDecorator('min_bet', {
                   initialValue: 0,
                   normalize: this.normalizeBet,
+                  rules: [{ required: true }]
                 })(
                   <Input
                     suffix="$"
                     size="large"
+                    autoComplete="off"
                   />
                 )}
               </FormItem>
@@ -161,11 +154,12 @@ class AddStation extends Component {
                 {getFieldDecorator('max_bet', {
                   initialValue: 0 ,
                   normalize: this.normalizeBet,
-                  rules: [{ validator: this.checkMaxBet }],
+                  rules: [{ required: true, validator: this.checkMaxBet }],
                 })(
                   <Input
                     suffix="$"
                     size="large"
+                    autoComplete="off"
                   />
                 )}
               </FormItem>
@@ -174,15 +168,17 @@ class AddStation extends Component {
                 label="Коэффициент"
               >
                 {getFieldDecorator('complexity', {
-                  initialValue: 2.0,
-                  normalize: this.normalizeComplexity,
+                  rules: [{ required: true, message: 'Не выбран коэффициент' }],
                 })(
-                  <InputNumber
+                  <Select
                     size="large"
-                    min={2}
-                    max={3}
-                    step={0.5}
-                  />
+                  >
+                    <Option value={1.50}>1,50</Option>
+                    <Option value={1.75}>1,75</Option>
+                    <Option value={2.00}>2,00</Option>
+                    <Option value={2.50}>2,50</Option>
+                    <Option value={3.00}>3,00</Option>
+                  </Select>
                 )}
               </FormItem>
               <FormItem>

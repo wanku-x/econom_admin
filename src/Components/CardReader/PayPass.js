@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Modal, Row, Alert, message } from 'antd';
 import { Loader } from '../Loader';
+import { requestPOST } from '../Requests';
 import MaskedInput from 'react-maskedinput';
 
 class PayPass extends Component {
@@ -28,17 +29,31 @@ class PayPass extends Component {
       this.toggleLock(true);
       const card = this.state.creditCard.replace(/_/g, '').substr(-10);
       if (card.length !== 10) {
-        this.setState({creditCard: ''});
+        this.setState({ creditCard: '' });
         message.error('Попробуйте считать карту снова');
         this.toggleLock(false);
         return;
       }
-      // check card valid
-      this.setState({loading: true}, () => {
-        this.props.onOk(card).finally(() => {
+      this.setState({ loading: true }, () => {
+        requestPOST('/api/v1/check_card/', {
+          card: card,
+          card_type: 'chip_number',
+        }).then((result) => {
+          console.log(result);
+          this.props.onOk({
+            card: card,
+            card_type: 'chip_number',
+            success: result.success,
+            error: result.error,
+            team_name: result.team_name,
+          });
+        }).catch((err) => {
+          console.log(err);
+          message.error('Ошибка соединения с сервером. Повторите позже');
+        }).finally(() => {
           this.setState({
             creditCard: '',
-            loading: false
+            loading: false,
           });
           this.toggleLock(false);
         });
@@ -59,7 +74,6 @@ class PayPass extends Component {
           destroyOnClose={true}
           visible={this.props.visible}
           closable={false}
-          okText="Оплатить"
           cancelText="Отмена"
           okButtonProps={{style: {display: 'none'}}}
           onCancel={() => this.props.onCancel()}
@@ -78,7 +92,7 @@ class PayPass extends Component {
                 type="text"
                 mask={'1'.repeat(1024)}
                 name="card"
-                style={{opacity: 0}}
+                style={{opacity: 0, width: '1px'}}
                 ref={(input) => { this.payPass = input }}
                 onChange={this.onChange}
                 onBlur={this.focusInput}

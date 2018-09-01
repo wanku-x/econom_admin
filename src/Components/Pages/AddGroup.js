@@ -85,9 +85,50 @@ class AddGroup extends Component {
           requestPOST('/api/v1/create_team/', values).then((result)=>{
             if (result.success) {
               message.success('Команда успешно создана');
+              this.props.form.setFields({
+                name: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                owner: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                faculty: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                group: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                bank: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                card: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                card_type: {
+                  value: undefined,
+                  errors: undefined,
+                },
+              });
             } else {
               message.error(result.error);
+              this.props.form.setFields({
+                card: {
+                  value: undefined,
+                  errors: undefined,
+                },
+                card_type: {
+                  value: undefined,
+                  errors: undefined,
+                },
+              });
             }
+            this.setState({ isReadingCard: false });
           }).catch((err)=>{
             console.log(err);
             message.error('Ошибка соединения с сервером. Повторите позже');

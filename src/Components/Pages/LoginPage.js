@@ -35,6 +35,7 @@ class LoginPage extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({loading: true}, () => {
+          values.email = values.email.toLowerCase();
           requestPOST('/login/', values).then((result)=>{
             if (result.success) {
               this.props.setLoggedIn(true);

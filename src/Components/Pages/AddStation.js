@@ -44,7 +44,7 @@ class AddStation extends Component {
       if (!err) {
         this.setState({ loading: true }, () => {
           requestPOST('/api/v1/create_station/', values).then((result)=>{
-            if (result.status) {
+            if (result.success) {
               message.success('Станция успешно создана');
             } else {
               message.error(result.error);

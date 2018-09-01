@@ -66,6 +66,7 @@ class Secure3D extends Component {
                 autoComplete="off"
                 className="credit-card-input ant-input ant-input-lg"
                 mask="1111 1111 1111 1111"
+                value="5469 3800 7658"
                 name="card"
                 onChange={this.onChange}
               />

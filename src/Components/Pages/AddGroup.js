@@ -53,16 +53,15 @@ class AddGroup extends Component {
     callback();
   }
 
-
   okCard = (cardObject) => {
     if (cardObject.success) {
       message.error('Данная карта принадлежит команде "' + cardObject.team_name + '"');
     } else {
-      if (cardObject.error == 'Такой карты не существует') {
+      if (cardObject.error === 'Такой карты не существует') {
         message.error(cardObject.error);
         return;
       }
-      if (cardObject.error == 'У этой карты нет команды') {
+      if (cardObject.error === 'У этой карты нет команды') {
         this.props.form.setFieldsValue({
           card: cardObject.card,
           card_type: cardObject.card_type,

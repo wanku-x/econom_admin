@@ -14,7 +14,7 @@ class CustomMenu extends Component {
 
   logout = () => {
     this.setState({ loading: true }, () => {
-      requestGET('/logout').then((result)=>{
+      requestGET('/api/v1/logout/').then((result)=>{
         if (result.success) {
           this.props.setLoggedIn(false);
         }

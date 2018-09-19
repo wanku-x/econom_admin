@@ -23,8 +23,8 @@ class PayPass extends Component {
     this.setState({creditCard: e.target.value});
   }
 
-  onSubmit = (evt) => {
-    evt.preventDefault();
+  onSubmit = (e) => {
+    e.preventDefault();
     if (!this.locked) {
       this.toggleLock(true);
       const card = this.state.creditCard.replace(/_/g, '').substr(-10);
@@ -39,7 +39,6 @@ class PayPass extends Component {
           card: card,
           card_type: 'chip_number',
         }).then((result) => {
-          console.log(result);
           this.props.onOk({
             card: card,
             card_type: 'chip_number',

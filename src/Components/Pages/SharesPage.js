@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Tabs, Form, Input, Button, Select, InputNumber } from 'antd';
+import { Row, Col, Card, Tabs, Form, Button, Select, InputNumber } from 'antd';
 
 class SharesPage extends Component {
   changeDeposit = (value, prevValue) => {
@@ -22,7 +22,6 @@ class SharesPage extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const TabPane = Tabs.TabPane;
     const FormItem = Form.Item;
     const ButtonGroup = Button.Group;

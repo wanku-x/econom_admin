@@ -195,7 +195,7 @@ class StationPage extends Component {
       }
     ];
 
-    return this.state.checkStationInfo == 'rendered' ? (
+    return this.state.checkStationInfo === 'rendered' ? (
       <Row
         style={{ minHeight: '100%' }}
         type="flex"
@@ -220,7 +220,7 @@ class StationPage extends Component {
           </Card>
         </Col>
       </Row>
-    ) : (this.state.checkStationInfo == 'not_found' ? (
+    ) : (this.state.checkStationInfo === 'not_found' ? (
       <NotFound />
     ) : (
       <Loader isOpen={true} />
